@@ -27,7 +27,7 @@ spec:
               mountPath: /persistentvolumes
           env:
             - name: PROVISIONER_NAME
-              value: UFS-RSSD-Provisioner
+              value: ucloud/ufsprovisioner
             - name: NFS_SERVER
               value: 10.10.154.165
             - name: NFS_PATH
