@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - env: []
-        image: uhub.service.ucloud.cn/k8srepo/grafana:7.2.0
+        image: uhub.service.ucloud.cn/ucloud_pts/grafana:7.2.0 
         name: grafana
         ports:
         - containerPort: 3000
@@ -28,13 +28,13 @@ spec:
             port: http
         resources:
           limits:
-            cpu: 200m
-            memory: 200Mi
+            cpu: 500m
+            memory: 800Mi
           requests:
             cpu: 100m
             memory: 100Mi
         volumeMounts:
-        - mountPath: /var/lib/grafana
+        - mountPath: /var/lib/grafana/
           name: grafana-storage
           readOnly: false
         - mountPath: /etc/grafana/provisioning/datasources
