@@ -4,10 +4,10 @@ cat > prometheus-db.yaml <<EOF
 apiVersion: 1
 
 datasources:
-  - name: Prometheus
+  - name: PrometheusDB
     type: prometheus
-    access: proxy
-    url: http://localhost:9090
+    access: Browser
+    url: http://10.10.191.210:30003
 EOF
 kubectl create secret generic grafana-datasources --from-file=prometheus-db.yaml --namespace monitoring
 
