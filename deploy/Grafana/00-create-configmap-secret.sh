@@ -7,7 +7,7 @@ datasources:
   - name: PrometheusDB
     type: prometheus
     access: Browser
-    url: http://10.10.191.210:30003
+    url: http://10.10.183.190:30003
 EOF
 kubectl create secret generic grafana-datasources --from-file=prometheus-db.yaml --namespace monitoring
 

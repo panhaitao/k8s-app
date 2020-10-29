@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - env: []
-        image: uhub.service.ucloud.cn/ucloud_pts/grafana:7.2.0 
+        image: uhub.service.ucloud.cn/ucloud_pts/grafana:7.3.0 
         name: grafana
         ports:
         - containerPort: 3000

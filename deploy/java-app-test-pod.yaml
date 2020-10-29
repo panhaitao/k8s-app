@@ -3,7 +3,7 @@ kind: ReplicationController
 metadata:
   name: myweb
 spec:
-  replicas: 40
+  replicas: 10
   selector:
     app: myweb
   template:

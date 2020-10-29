@@ -29,7 +29,7 @@ spec:
             - name: PROVISIONER_NAME
               value: ucloud/ufsprovisioner
             - name: NFS_SERVER
-              value: 10.10.53.26
+              value: 10.10.36.55
             - name: NFS_PATH
               value: /
       volumes:
@@ -60,7 +60,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /
-    server: 10.10.53.26
+    server: 10.10.36.55
   mountOptions:
     - nolock
     - nfsvers=4.0
