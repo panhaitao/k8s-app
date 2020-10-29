@@ -16,6 +16,10 @@ spec:
           image: uhub.service.ucloud.cn/ucloud/jenkins:2.222.3 
           ports:
           - containerPort: 8080
+          readinessProbe:
+            exec:
+              command:
+              - "env"
           env:
           - name: MYSQL_SERVICE_HOST
             value: 'mysql'
