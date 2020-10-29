@@ -10,6 +10,9 @@ scrape_configs:
   - job_name: kubernetes-pods
     kubernetes_sd_configs:
     - role: pod
+  - job_name: kubernetes-nodes
+    kubernetes_sd_configs:
+    - role: node
   - job_name: kubernetes-service-endpoints
     kubernetes_sd_configs:
     - role: endpoints
