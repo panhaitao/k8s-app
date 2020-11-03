@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+ prometheus:
+   image: prom/prometheus
+   container_name: prometheus
+   hostname: prometheus
+   network_mode: host
+   restart: always
+   volumes:
+     - prometheus-config.yml:/etc/prometheus/prometheus.yml
+   command:
+     - '--config.file=/etc/prometheus/prometheus.yml'
+     - '--web.external-url=http://localhost/prometheus'
+   ports:
+     - "9090:9090"
+   environment:
+     - PROMETHEUS_ADMIN_USER=admin
+     - PROMETHEUS_ADMIN_PASSWORD=admin
