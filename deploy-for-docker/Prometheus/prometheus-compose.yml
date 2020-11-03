@@ -2,16 +2,17 @@ version: '3.1'
 
 services:
  prometheus:
-   image: prom/prometheus
+   image: uhub.service.ucloud.cn/k8srepo/prometheus:v2.22.0
    container_name: prometheus
    hostname: prometheus
    network_mode: host
    restart: always
    volumes:
-     - prometheus-config.yml:/etc/prometheus/prometheus.yml
+     - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
    command:
      - '--config.file=/etc/prometheus/prometheus.yml'
-     - '--web.external-url=http://localhost/prometheus'
+     - "--storage.tsdb.path=/prometheus"
+     - "--storage.tsdb.retention=24h"
    ports:
      - "9090:9090"
    environment:

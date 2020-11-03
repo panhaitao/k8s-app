@@ -2,8 +2,13 @@ version: '3.1'
 
 services:
  grafana:
-   image: grafana/grafana:latest
+   image: uhub.service.ucloud.cn/k8srepo/grafana:7.3.0
    container_name: grafana
+   network_mode: host
+   volumes:
+    - /var/lib/grafana/:/var/lib/grafana/
+    - ./provisioning/dashboards:/etc/grafana/provisioning/dashboards/
+    - ./provisioning/datasources/:/etc/grafana/provisioning/datasources/
    ports:
      - "3000:3000"
    environment:
