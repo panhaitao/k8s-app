@@ -1,21 +1,36 @@
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: myapp-hpa-v2
+  name: ucloud-nginx
   namespace: default
 spec:
-  minReplicas: 1         ##至少1个副本
-  maxReplicas: 8         ##最多8个副本
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: myapp
+    name: ucloud-nginx
+  minReplicas: 1
+  maxReplicas: 10
   metrics:
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: 50  ##注意此时是根据使用率，也可以根据使用量：targetAverageValue
-  - type: Resource
-    resource:
-      name: memory
-      targetAverageUtilization: 50  ##注意此时是根据使用率，也可以根据使用量：targetAverageValue
+      target:
+        type: Utilization
+        averageUtilization: 2
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Percent
+        value: 500
+        periodSeconds: 15
+      - type: Pods
+        value: 10
+        periodSeconds: 15
+      selectPolicy: Max
+    scaleDown:
+      stabilizationWindowSeconds: 10
+      policies:
+      - type: Percent
+        value: 100
+        periodSeconds: 15
