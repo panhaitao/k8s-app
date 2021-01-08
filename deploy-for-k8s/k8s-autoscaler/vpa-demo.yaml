@@ -1,0 +1,27 @@
+apiVersion: autoscaling.k8s.io/v1beta2
+kind: VerticalPodAutoscaler
+metadata:
+  name: nginx-vpa
+  namespace: vpa
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: nginx
+  updatePolicy:
+    updateMode: "Off"
+  resourcePolicy:
+    containerPolicies:
+    - containerName: "nginx"
+      minAllowed:
+        cpu: "250m"
+        memory: "100Mi"
+      maxAllowed:
+        cpu: "2000m"
+        memory: "2048Mi"
+
+# 使用describe查看vpa详情，可以用来评估资源使用
+# Lower Bound:             下限值
+# Target:                  推荐值
+# Upper Bound:             上限值
+# Uncapped Target:         如果没有为VPA提供最小或最大边界，则表示目标利用率
