@@ -17,26 +17,27 @@ spec:
     spec:
       containers:
       - name: wordpress
-        image: wordpress
+        image: wordpress:php7.4-fpm-alpine 
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
           name: wordpress
         env:
         - name: WORDPRESS_DB_HOST
-          value: 10.254.175.158:3306
+          value: 10.10.114.135:3306
         - name: WORDPRESS_DB_USER
           value: root
         - name: WORDPRESS_DB_PASSWORD
-          value: wordpress
+          value: abc123456
         - name: WORDPRESS_DB_NAME
           value: wordpress
         volumeMounts:
         - name: wordpress-persistent-storage
-          mountPath: /var/www/html
+          mountPath: /var/www/html/
       volumes:
       - name: wordpress-persistent-storage
         persistentVolumeClaim:
+          claimName: nfs
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -45,7 +46,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteMany
-  storageClassName: manual
+  storageClassName: ufs-nfsv4-storage
   resources:
     requests:
       storage: 1Gi
