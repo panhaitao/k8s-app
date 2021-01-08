@@ -1,4 +1,4 @@
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress-deploy
@@ -6,6 +6,10 @@ metadata:
   labels:
     app: wordpress
 spec:
+  selector:
+    matchLabels:
+      app: wordpress
+  replicas: 2
   template:
     metadata:
       labels:
@@ -25,6 +29,26 @@ spec:
           value: root
         - name: WORDPRESS_DB_PASSWORD
           value: wordpress
+        - name: WORDPRESS_DB_NAME
+          value: wordpress
+        volumeMounts:
+        - name: wordpress-persistent-storage
+          mountPath: /var/www/html
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 1Gi
 ---
 apiVersion: v1
 kind: Service
