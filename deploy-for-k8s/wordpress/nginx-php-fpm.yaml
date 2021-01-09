@@ -1,0 +1,58 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: php-fpm-nginx
+spec:
+  selector:
+    matchLabels:
+      app: php-fpm-nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: php-fpm-nginx
+    spec:
+      containers:
+        - name: php-fpm-nginx
+          image: php:fpm-alpine
+          ports:
+            - containerPort: 9000
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: nginx-www
+          lifecycle:
+            postStart:
+              exec:
+                command: ["/bin/sh", "-c", "pwd"]
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: nginx-www
+            - mountPath: /etc/nginx/nginx.conf
+              subPath: nginx.conf
+              name: nginx-config
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: nginx-config
+        - name: nginx-www
+          persistentVolumeClaim:
+            claimName: nfs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-fpm-nginx
+  namespace: default
+  labels:
+    app: php-fpm-nginx
+spec:
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+  selector:
+    app: php-fpm-nginx
