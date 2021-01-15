@@ -18,6 +18,13 @@ spec:
       containers:
       - name: wordpress
         image: wordpress 
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "1024Mi"
+            cpu: "2"
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
