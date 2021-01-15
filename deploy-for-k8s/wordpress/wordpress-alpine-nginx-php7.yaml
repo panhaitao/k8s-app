@@ -14,30 +14,13 @@ spec:
     spec:
       containers:
         - name: php-fpm-nginx
-          image: php:fpm-alpine
+          image: uhub.service.ucloud.cn/ucloud_pts/alpine-nginx-php7:latest 
           ports:
-            - containerPort: 9000
+            - containerPort: 8080
           volumeMounts:
             - mountPath: /var/www/html
               name: nginx-www
-          lifecycle:
-            postStart:
-              exec:
-                command: ["/bin/sh", "-c", "pwd"]
-        - name: nginx
-          image: nginx
-          ports:
-            - containerPort: 80
-          volumeMounts:
-            - mountPath: /var/www/html
-              name: nginx-www
-            - mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
-              name: nginx-config
       volumes:
-        - name: nginx-config
-          configMap:
-            name: nginx-config
         - name: nginx-www
           persistentVolumeClaim:
             claimName: nfs
@@ -54,5 +37,6 @@ spec:
   ports:
     - protocol: TCP
       port: 80
+      targetPort: 8080
   selector:
     app: php-fpm-nginx
