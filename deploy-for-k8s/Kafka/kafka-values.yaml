@@ -1,4 +1,7 @@
+name: kafka
 replicas: 3
+image: uhub.service.ucloud.cn/ucloud_pts/cp-kafka
+imageTag: 5.0.1
 tolerations:
 - key: node-role.kubernetes.io/master
   operator: Exists
@@ -7,11 +10,21 @@ tolerations:
   operator: Exists
   effect: PreferNoSchedule
 persistence:
-  storageClass: local-storage
+  storageClass: ufs-nfsv4-storage
   size: 5Gi
 zookeeper:
   persistence:
     enabled: true
-    storageClass: local-storage
+    storageClass: ufs-nfsv4-storage
     size: 5Gi
   replicaCount: 3
+  image:
+    repository: uhub.service.ucloud.cn/ucloud_pts/zookeeper
+    tag: 3.5.5
+  tolerations:
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: NoSchedule
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: PreferNoSchedule
