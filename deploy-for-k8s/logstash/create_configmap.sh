@@ -22,7 +22,7 @@ filter {
 
 output {
   elasticsearch {
-    hosts => ["10.10.46.42:9200"]
+    hosts => ["http://10.9.172.47:9200"]
     index => "k8s_log-20210223"
   }
 }
@@ -31,7 +31,7 @@ EOF
 
 cat > logstash.yml <<EOF
 http.host: "0.0.0.0"
-xpack.monitoring.elasticsearch.hosts: [ "http://10.10.46.42:9200" ]
+xpack.monitoring.elasticsearch.hosts: [ "http://10.9.172.47:9200" ]
 EOF
 
 kubectl delete cm logstash-pipeline-config -n logs
