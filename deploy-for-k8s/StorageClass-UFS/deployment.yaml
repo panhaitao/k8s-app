@@ -21,7 +21,7 @@ spec:
       serviceAccountName: nfs-client-provisioner
       containers:
         - name: nfs-client-provisioner
-          image: quay.io/external_storage/nfs-client-provisioner:latest 
+          image: uhub.service.ucloud.cn/k8srepo/nfs-client-provisioner:latest 
           volumeMounts:
             - name: nfs-client-root
               mountPath: /persistentvolumes
@@ -29,7 +29,7 @@ spec:
             - name: PROVISIONER_NAME
               value: ucloud/ufsprovisioner
             - name: NFS_SERVER
-              value: 10.9.21.202
+              value: 10.9.113.130
             - name: NFS_PATH
               value: /
       volumes:
@@ -46,7 +46,7 @@ spec:
     - ReadWriteMany
   resources:
     requests:
-      storage: 100G
+      storage: 200G
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -54,13 +54,13 @@ metadata:
   name: nfs-client-root
 spec:
   capacity:
-    storage: 100G
+    storage: 200G
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   nfs:
     path: /
-    server: 10.9.21.202
+    server: 10.9.113.130
   mountOptions:
     - nolock
     - nfsvers=4.0
